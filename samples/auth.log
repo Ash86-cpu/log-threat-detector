@@ -1,0 +1,34 @@
+Oct  6 08:02:00 web01 sshd[1801]: Accepted publickey for alice from 198.51.100.7 port 51022 ssh2
+Oct  6 08:05:00 web01 CRON[1810]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Oct  6 08:31:00 web01 sshd[1850]: Failed password for bob from 198.51.100.23 port 44810 ssh2
+Oct  6 08:31:14 web01 sshd[1852]: Accepted password for bob from 198.51.100.23 port 44816 ssh2
+Oct  6 08:40:00 web01 sudo: alice : TTY=pts/0 ; PWD=/home/alice ; USER=root ; COMMAND=/usr/bin/apt update
+Oct  6 09:14:00 web01 sshd[2211]: Failed password for root from 203.0.113.50 port 40112 ssh2
+Oct  6 09:14:04 web01 sshd[2212]: Failed password for root from 203.0.113.50 port 40120 ssh2
+Oct  6 09:14:08 web01 sshd[2213]: Failed password for root from 203.0.113.50 port 40128 ssh2
+Oct  6 09:14:12 web01 sshd[2214]: Failed password for root from 203.0.113.50 port 40136 ssh2
+Oct  6 09:14:16 web01 sshd[2215]: Failed password for root from 203.0.113.50 port 40144 ssh2
+Oct  6 09:14:20 web01 sshd[2216]: Failed password for root from 203.0.113.50 port 40152 ssh2
+Oct  6 09:14:24 web01 sshd[2217]: Failed password for root from 203.0.113.50 port 40160 ssh2
+Oct  6 09:14:28 web01 sshd[2218]: Failed password for root from 203.0.113.50 port 40168 ssh2
+Oct  6 09:14:32 web01 sshd[2219]: Failed password for root from 203.0.113.50 port 40176 ssh2
+Oct  6 09:14:36 web01 sshd[2220]: Failed password for root from 203.0.113.50 port 40184 ssh2
+Oct  6 09:14:40 web01 sshd[2221]: Failed password for root from 203.0.113.50 port 40192 ssh2
+Oct  6 09:14:44 web01 sshd[2222]: Failed password for root from 203.0.113.50 port 40200 ssh2
+Oct  6 10:03:00 web01 sshd[2400]: Failed password for invalid user admin from 203.0.113.99 port 33000 ssh2
+Oct  6 10:03:20 web01 sshd[2401]: Failed password for invalid user test from 203.0.113.99 port 33005 ssh2
+Oct  6 10:03:40 web01 sshd[2402]: Failed password for invalid user oracle from 203.0.113.99 port 33010 ssh2
+Oct  6 10:04:00 web01 sshd[2403]: Failed password for invalid user postgres from 203.0.113.99 port 33015 ssh2
+Oct  6 10:04:20 web01 sshd[2404]: Failed password for invalid user ubuntu from 203.0.113.99 port 33020 ssh2
+Oct  6 10:04:40 web01 sshd[2405]: Failed password for invalid user deploy from 203.0.113.99 port 33025 ssh2
+Oct  6 10:05:00 web01 sshd[2406]: Failed password for invalid user git from 203.0.113.99 port 33030 ssh2
+Oct  6 10:05:20 web01 sshd[2407]: Failed password for invalid user jenkins from 203.0.113.99 port 33035 ssh2
+Oct  6 11:41:00 web01 sshd[2600]: Failed password for deploy from 192.0.2.44 port 52000 ssh2
+Oct  6 11:41:06 web01 sshd[2601]: Failed password for deploy from 192.0.2.44 port 52003 ssh2
+Oct  6 11:41:12 web01 sshd[2602]: Failed password for deploy from 192.0.2.44 port 52006 ssh2
+Oct  6 11:41:18 web01 sshd[2603]: Failed password for deploy from 192.0.2.44 port 52009 ssh2
+Oct  6 11:41:24 web01 sshd[2604]: Failed password for deploy from 192.0.2.44 port 52012 ssh2
+Oct  6 11:41:30 web01 sshd[2605]: Failed password for deploy from 192.0.2.44 port 52015 ssh2
+Oct  6 11:41:40 web01 sshd[2607]: Accepted password for deploy from 192.0.2.44 port 52031 ssh2
+Oct  6 12:00:00 web01 systemd[1]: Started Daily apt download activities.
+Oct  6 12:12:00 web01 sshd[2700]: Accepted publickey for alice from 198.51.100.7 port 51987 ssh2

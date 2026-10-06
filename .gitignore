@@ -218,3 +218,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Keep sample logs used for demos and tests
+!samples/*.log
