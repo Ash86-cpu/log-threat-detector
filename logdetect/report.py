@@ -18,7 +18,7 @@ def filter_by_severity(alerts: List[Alert], minimum: str) -> List[Alert]:
 
 def format_text(alerts: List[Alert], event_count: int) -> str:
     """A report for an analyst reading in a terminal."""
-    lines = [f"Parsed {event_count} login events, raised {len(alerts)} alerts", ""]
+    lines = [f"Parsed {event_count} events, raised {len(alerts)} alerts", ""]
     for alert in alerts:
         lines += [
             f"[{alert.severity.upper()}] {alert.rule}  ({alert.mitre_id} {alert.mitre_name})",

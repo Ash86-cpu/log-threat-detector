@@ -33,3 +33,16 @@ class Alert:
     first_seen: datetime
     last_seen: datetime
     event_count: int
+
+
+@dataclass(frozen=True)
+class WebRequest:
+    """One HTTP request, extracted from one web server access log line."""
+
+    timestamp: datetime
+    source_ip: str
+    method: str       # GET, POST, ...
+    path: str         # the requested URL path and query string, as sent
+    status: int       # the server's response code, e.g. 200 or 404
+    user_agent: str   # what the client claims to be
+    raw: str
