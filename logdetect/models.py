@@ -18,3 +18,18 @@ class Event:
     source_ip: str   # who did it
     username: str    # the account they targeted
     raw: str         # the original line, kept as evidence for the analyst
+
+
+@dataclass(frozen=True)
+class Alert:
+    """A detection rule's verdict that something suspicious happened."""
+
+    rule: str             # short machine-readable rule name
+    severity: str         # "medium", "high" or "critical"
+    mitre_id: str         # MITRE ATT&CK technique ID, e.g. "T1110.001"
+    mitre_name: str       # human-readable technique name
+    source_ip: str
+    description: str      # one sentence an analyst can act on
+    first_seen: datetime
+    last_seen: datetime
+    event_count: int

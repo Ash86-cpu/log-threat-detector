@@ -1,9 +1,9 @@
 """Entry point: lets you run the tool with `python -m logdetect <logfile>`."""
 
 import sys
-from collections import Counter
 from pathlib import Path
 
+from .detections import run_all
 from .parser import parse_ssh_log
 
 
@@ -13,15 +13,15 @@ def main() -> int:
         return 1
 
     events = list(parse_ssh_log(Path(sys.argv[1])))
-    print(f"Parsed {len(events)} login events\n")
+    alerts = run_all(events)
+    print(f"Parsed {len(events)} login events, raised {len(alerts)} alerts\n")
 
-    for action, count in Counter(e.action for e in events).items():
-        print(f"  {action:<14} {count}")
-
-    print("\nFailed logins by source IP:")
-    failures = Counter(e.source_ip for e in events if e.action == "login_failed")
-    for ip, count in failures.most_common():
-        print(f"  {ip:<16} {count}")
+    for alert in alerts:
+        print(f"[{alert.severity.upper()}] {alert.rule}  ({alert.mitre_id} {alert.mitre_name})")
+        print(f"  source ip : {alert.source_ip}")
+        print(f"  what      : {alert.description}")
+        print(f"  when      : {alert.first_seen:%b %d %H:%M:%S} to {alert.last_seen:%H:%M:%S}")
+        print()
     return 0
 
 
