@@ -2,6 +2,8 @@
 
 [![tests](https://github.com/Ash86-cpu/log-threat-detector/actions/workflows/tests.yml/badge.svg)](https://github.com/Ash86-cpu/log-threat-detector/actions/workflows/tests.yml)
 
+![Example run](docs/demo.png)
+
 A Python command-line tool that reads SSH authentication logs and web server
 access logs, detects common attacks, and reports them as alerts mapped to
 [MITRE ATT&CK](https://attack.mitre.org/) techniques.
