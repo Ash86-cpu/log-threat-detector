@@ -36,6 +36,25 @@ class Alert:
 
 
 @dataclass(frozen=True)
+class EnrichedAlert:
+    """An Alert plus the context a playbook looked up about its source IP."""
+
+    alert: Alert
+    reputation: str              # "malicious", "suspicious", "allowlisted" or "unknown"
+    country: str                 # two-letter code, or "??" when not known
+    tags: tuple[str, ...]        # labels from threat intel; a tuple so it stays frozen
+    note: str = ""               # free text, e.g. why an IP is allowlisted
+
+
+@dataclass(frozen=True)
+class Decision:
+    """What the playbook decided to do about one enriched alert, and why."""
+
+    verdict: str     # "block", "escalate" or "monitor"
+    reason: str      # one sentence, written to the audit log
+
+
+@dataclass(frozen=True)
 class WebRequest:
     """One HTTP request, extracted from one web server access log line."""
 

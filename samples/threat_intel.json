@@ -1,0 +1,12 @@
+{
+  "_comment": "Fake threat intelligence for demos and tests. All IPs are from documentation ranges (RFC 5737). In production this data would come from a feed or an API such as AbuseIPDB.",
+  "allowlist": {
+    "203.0.113.120": "Our own authorised vulnerability scanner (weekly scan)"
+  },
+  "ips": {
+    "203.0.113.50": {"reputation": "malicious", "country": "NL", "tags": ["ssh-bruteforce"]},
+    "203.0.113.99": {"reputation": "malicious", "country": "RU", "tags": ["ssh-bruteforce", "password-spraying"]},
+    "203.0.113.77": {"reputation": "malicious", "country": "CN", "tags": ["web-attacker", "sqlmap"]},
+    "192.0.2.44":   {"reputation": "suspicious", "country": "US", "tags": ["botnet"]}
+  }
+}

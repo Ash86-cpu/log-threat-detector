@@ -79,6 +79,66 @@ Parsed 27 events, raised 2 alerts
   when      : Oct 06 12:07:35 to 12:07:45
 ```
 
+## Response playbook (SOAR)
+
+Detection answers *what happened*. With `--respond`, alerts then run through a
+small SOAR-style playbook that answers *what do we do about it*, the same
+steps a platform like Splunk SOAR, Cortex XSOAR, Tines or a Sentinel playbook runs:
+
+| Step | What it does here | In production this would be |
+|---|---|---|
+| 1. Enrich | Looks up each source IP in `samples/threat_intel.json` (reputation, country, tags, allowlist) | AbuseIPDB / VirusTotal / a TI platform API |
+| 2. Decide | Applies response rules: **block**, **escalate** to a human, or **monitor** | Playbook decision blocks |
+| 3. Act | Appends IPs to `output/blocklist.txt`, writes tickets to `output/incidents.json` | Firewall / EDR API, Jira or ServiceNow |
+| 4. Notify | Prints a response summary for the analyst | Slack / Teams / email |
+| 5. Record | Appends every decision and its reason to `output/audit.log` | SOAR case history |
+
+The decision rules, checked in order (safety rules first):
+
+1. Allowlisted IP (e.g. our own scanner) → **monitor**, never auto-blocked
+2. Critical alert (login succeeded after failures) → **escalate**: blocking the
+   IP does not help if the attacker is already in; a human must reset
+   credentials and investigate
+3. IP listed as malicious → **block**
+4. High severity, IP suspicious or unknown → **escalate**: not confident enough to act alone
+5. Anything else → **monitor**
+
+```bash
+python -m logdetect samples/auth.log --respond --dry-run   # show what would happen
+python -m logdetect samples/auth.log --respond             # actually write output/
+```
+
+```
+Response playbook (DRY RUN - nothing was written)
+
+[ESCALATE] 192.0.2.44      ssh_success_after_failures   intel: suspicious
+             why: Possible account compromise: blocking the IP is not enough, a human must reset credentials and investigate
+             next steps for the analyst:
+               - Disable or reset the password of the account that logged in ('deploy')
+               - Review what that account did after the successful login (commands, files, new keys)
+               - Check ~/.ssh/authorized_keys and cron jobs for persistence added by the attacker
+               - Block 192.0.2.44 once the compromise is confirmed
+               - Search other servers' logs for activity from 192.0.2.44
+[BLOCK   ] 203.0.113.50    ssh_brute_force              intel: malicious
+             why: Attack from an IP that threat intel lists as malicious
+[BLOCK   ] 203.0.113.99    ssh_password_spraying        intel: malicious
+             why: Attack from an IP that threat intel lists as malicious
+[ESCALATE] 192.0.2.44      ssh_brute_force              intel: suspicious
+             why: High-severity attack but IP reputation is suspicious; not confident enough to auto-block
+
+Blocked 2 new IPs, opened 2 incidents for a human, monitored the rest.
+```
+
+Every escalated alert carries a checklist of **recommended next steps** for the
+analyst, specific to the rule that fired (with the IP and account filled in),
+both on screen and in each ticket in `incidents.json`.
+
+`--dry-run` shows the decisions without writing anything, the way new
+playbooks are tested before they are allowed to act. An IP is only added to
+the blocklist once, across alerts and across runs. The playbook tests include
+safety tests proving an allowlisted IP is never blocked and a critical alert
+always reaches a human, whatever threat intel says.
+
 ## Options
 
 | Option | Purpose |
@@ -157,7 +217,7 @@ pip install -r requirements-dev.txt
 python -m pytest -v
 ```
 
-36 tests cover the parsers, every rule, and the report formats. Each rule is
+53 tests cover the parsers, every rule, the report formats and the response playbook. Each rule is
 tested both ways: that it fires on an attack, and that it stays quiet on normal
 behaviour such as a user mistyping a password once, or a search for
 "credit union rates". GitHub Actions runs the suite on Python 3.10 and 3.12 on
